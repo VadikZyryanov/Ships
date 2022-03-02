@@ -1,0 +1,54 @@
+@import '../../../styles';
+
+.back {
+  display: flex;
+  align-items: center;
+  margin-bottom: 22px;
+
+  &__text {
+    color: $blue;
+    margin-left: 5px;
+  }
+}
+
+.card {
+  padding: 52px 64px 162px;
+  background-color: $light-gray;
+
+  &__title {
+    @include title;
+    margin-bottom: 53px;
+  }
+
+  &__info {
+    display: grid;
+    grid-template-columns: 425px 425px;
+    grid-template-rows: 2fr;
+    row-gap: 40px;
+    margin-bottom: 40px;
+  }
+
+  &__item {
+    width: 425px;
+
+    &-label {
+      margin-right: 104px;
+    }
+
+    &-value {
+      color: $blue;
+    }
+  }
+
+  &__subtitle {
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 24px;
+    margin-bottom: 22px;
+  }
+
+  &__text {
+    width: 700px;
+    color: $blue;
+  }
+}

@@ -1,5 +1,21 @@
+$light-gray: #FAFAFA;
 $gray: #A5A5A5;
 $blue: #2962FF;
+
+@mixin title {
+  font-weight: 500;
+  font-size: 28px;
+  line-height: 32px;
+  opacity: 87%;
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  src: local("Roboto"),
+  url(https://fonts.gstatic.com/s/roboto/v29/KFOmCnqEu92Fr1Mu4mxK.woff2) format("woff2");
+}
 
 html {
   box-sizing: border-box;
@@ -13,7 +29,7 @@ html {
 
 body {
   margin: 0;
-  font-family: 'Roboto', serif;
+  font-family: 'Roboto', "Arial", sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 16px;

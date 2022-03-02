@@ -1,19 +1,22 @@
 <main class="main">
   <section class="list">
     <h1 class="list__title">SpaceX Ships</h1>
-    <ng-container *ngIf="list.length ; else emptylist">
+    <ng-container *ngIf="ships.length ; else emptylist">
       <ul class="list__cards cards">
-        <li *ngFor="let card of list" class="card">
-          <h3 class="card__title">{{card.title}}</h3>
+        <li routerLink="/card" *ngFor="let ship of ships" class="card">
+          <div class="card__title">
+            <h3 class="card__title-text">{{ship.name}}</h3>
+            <img class="card__title-icon" src="../../../assets/icons/arrow.svg" alt="arrow">
+          </div>
           <div class="card__info">
             <div class="card__item">
               <span class="card__item-label">Тип</span>
-              <span class="card__item-value">{{card.type}}</span>
+              <span class="card__item-value">{{ship.type}}</span>
             </div>
 
             <div class="card__item">
               <span class="card__item-label">Порт</span>
-              <span class="card__item-value">{{card.port}}</span>
+              <span class="card__item-value">{{ship.homePort}}</span>
             </div>
           </div>
         </li>
@@ -30,10 +33,10 @@
       <div class="filter__type">
         <h3 class="filter__type-title">Тип</h3>
 
-        <ng-container *ngFor="let type of list">
+        <ng-container *ngFor="let type of ships">
           <div class="filter__type-item type-item">
-            <input type="radio" name="type" value="">
-            <span class="type-item__text" >{{type.title}}</span>
+            <input class="type-item__button" type="radio" name="type" value="">
+            <span class="type-item__text" >{{type.name}}</span>
           </div>
         </ng-container>
       </div>
