@@ -1,0 +1,42 @@
+<main class="main">
+  <section class="list">
+    <h1 class="list__title">SpaceX Ships</h1>
+    <ng-container *ngIf="list.length ; else emptylist">
+      <ul class="list__cards cards">
+        <li *ngFor="let card of list" class="card">
+          <h3 class="card__title">{{card.title}}</h3>
+          <div class="card__info">
+            <div class="card__item">
+              <span class="card__item-label">Тип</span>
+              <span class="card__item-value">{{card.type}}</span>
+            </div>
+
+            <div class="card__item">
+              <span class="card__item-label">Порт</span>
+              <span class="card__item-value">{{card.port}}</span>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </ng-container>
+    <ng-template #emptylist>Список пустой</ng-template>
+  </section>
+  <aside class="aside">
+    <div class="filter">
+      <h2 class="filter__title">Фильтры</h2>
+      <input class="filter__name" type="text" placeholder="Название">
+      <input class="filter__port" type="text" placeholder="Название">
+
+      <div class="filter__type">
+        <h3 class="filter__type-title">Тип</h3>
+
+        <ng-container *ngFor="let type of list">
+          <div class="filter__type-item type-item">
+            <input type="radio" name="type" value="">
+            <span class="type-item__text" >{{type.title}}</span>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </aside>
+</main>

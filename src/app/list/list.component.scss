@@ -1,0 +1,95 @@
+@import 'src/styles';
+
+.main {
+  display: flex;
+  height: 100vh;
+}
+
+.list {
+  width: calc(100vw - 393px);
+  padding: 52px 64px 162px;
+
+  &__title {
+    font-weight: 500;
+    font-size: 28px;
+    line-height: 32px;
+    opacity: 87%;
+    margin-bottom: 64px;
+  }
+}
+
+.card {
+  cursor: pointer;
+
+  &__title {
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 23px;
+    opacity: 87%;
+    margin-bottom: 29px;
+  }
+
+  &__info {
+    display: flex;
+    padding-bottom: 29px;
+    margin-bottom: 40px;
+    border-bottom: 1px solid $gray;
+  }
+
+  &__item {
+    width: 425px;
+
+    &-label {
+      margin-right: 104px;
+    }
+
+    &-value {
+      color: $blue;
+    }
+  }
+}
+
+.aside {
+  width: 393px;
+  border-left: 1px solid $gray;
+}
+
+.filter {
+  padding: 52px 32px;
+
+  &__title {
+    font-size: 24px;
+    font-weight: normal;
+    line-height: 32px;
+    margin-bottom: 48px;
+  }
+
+  &__name {
+    border: none;
+    border-bottom: 1px solid $gray;
+    padding: 7px 0;
+    margin-bottom: 40px;
+
+    &:focus {
+      border-bottom: 1px solid $blue;
+    }
+  }
+
+  &__type {
+
+    &-title {
+      font-weight: bold;
+      font-size: 16px;
+      line-height: 19px;
+      margin-bottom: 21px;
+    }
+  }
+}
+
+.type-item {
+  margin-bottom: 12px;
+
+  &__text {
+    margin-left: 26px;
+  }
+}
