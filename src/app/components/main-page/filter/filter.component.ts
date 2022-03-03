@@ -21,7 +21,6 @@ export class FilterComponent implements OnInit {
   ngOnInit(): void {
     this.filterName.valueChanges.subscribe(value => {
       console.log(value);
-      this.filterOptions.name = value;
     })
   }
 

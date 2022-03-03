@@ -24,5 +24,21 @@
     </ul>
   </ng-container>
   <ng-template #emptylist>Список пустой</ng-template>
+
+  <div *ngIf="maxStr !== 1" class="pagination">
+    <a class="pagination__prev"
+        [ngClass]="{'disabled': disabledPrev}"
+       (click)="prevStr()"
+    >
+      <img src="./assets/icons/arrow-prev.svg" alt="arrow-prev">
+    </a>
+    <span class="pagination__number">{{numberStr}}</span>
+    <a class="pagination__next"
+        [ngClass]="{'disabled': disabledNext}"
+       (click)="nextStr()"
+    >
+      <img src="./assets/icons/arrow-next.svg" alt="arrow-next">
+    </a>
+  </div>
 </section>
 

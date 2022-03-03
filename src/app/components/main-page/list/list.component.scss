@@ -15,6 +15,7 @@
 .card {
   position: relative;
   cursor: pointer;
+  margin-bottom: 40px;
 
   &__link {
     display: block;
@@ -59,7 +60,6 @@
   &__info {
     display: flex;
     padding-bottom: 29px;
-    margin-bottom: 40px;
     border-bottom: 1px solid $gray;
   }
 
@@ -73,5 +73,31 @@
     &-value {
       color: $blue;
     }
+  }
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+
+  &__prev,
+  &__next{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+  }
+
+  &__prev.disabled,
+  &__next.disabled {
+    cursor: default;
+    opacity: 0.2;
+  }
+
+  &__number {
+    display: block;
+    margin: 0 18px;
   }
 }
