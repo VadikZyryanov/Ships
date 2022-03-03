@@ -1,0 +1,32 @@
+<section *ngIf="shipDetails" class="card">
+  <a routerLink="/main-page" class="back">
+    <img class="back__icon" src="../../../../assets/icons/arrow-back.svg" alt="arrow">
+    <span class="back__text">Вернуться</span>
+  </a>
+  <h1 class="card__title">{{shipDetails.name}}</h1>
+  <div class="card__info">
+    <div class="card__item">
+      <span class="card__item-label">Тип</span>
+      <span class="card__item-value">{{shipDetails.type}}</span>
+    </div>
+
+    <div class="card__item">
+      <span class="card__item-label">Порт</span>
+      <span class="card__item-value">{{shipDetails.home_port}}</span>
+    </div>
+
+    <div class="card__item">
+      <span class="card__item-label">Вес</span>
+      <span class="card__item-value">{{shipDetails.weight_kg}}</span>
+    </div>
+
+    <div class="card__item">
+      <span class="card__item-label">Год</span>
+      <span class="card__item-value">{{shipDetails.year_built}}</span>
+    </div>
+  </div>
+  <h4 class="card__subtitle">Миссии</h4>
+  <p class="card__text">
+    {{shipMissions}}
+  </p>
+</section>

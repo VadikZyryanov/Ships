@@ -1,0 +1,48 @@
+@import './src/styles';
+
+.filter {
+  padding: 52px 32px;
+
+  &__title {
+    font-size: 24px;
+    font-weight: normal;
+    line-height: 32px;
+    margin-bottom: 48px;
+  }
+
+  &__name {
+    border: none;
+    border-bottom: 1px solid $gray;
+    padding: 7px 0;
+    margin-bottom: 40px;
+
+    &:focus {
+      border-bottom: 1px solid $blue;
+    }
+  }
+
+  &__type {
+
+    &-title {
+      font-weight: bold;
+      font-size: 16px;
+      line-height: 19px;
+      margin-bottom: 21px;
+    }
+  }
+}
+
+.type-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+
+  &__button {
+    width: 18px;
+    height: 18px;
+  }
+
+  &__text {
+    margin-left: 26px;
+  }
+}

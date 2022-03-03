@@ -1,0 +1,28 @@
+<section class="list">
+  <h1 class="list__title">SpaceX Ships</h1>
+  <ng-container *ngIf="ships.length ; else emptylist">
+    <ul class="list__cards cards">
+      <li class="card" *ngFor="let ship of ships">
+        <a class="card__link" [routerLink]="['card', ship.id]" >
+          <div class="card__title">
+            <h3 class="card__title-text">{{ship.name}}</h3>
+            <img class="card__title-icon" src="../../../../assets/icons/arrow.svg" alt="arrow">
+          </div>
+          <div class="card__info">
+            <div class="card__item">
+              <span class="card__item-label">Тип</span>
+              <span class="card__item-value">{{ship.type}}</span>
+            </div>
+
+            <div class="card__item">
+              <span class="card__item-label">Порт</span>
+              <span class="card__item-value">{{ship.home_port}}</span>
+            </div>
+          </div>
+        </a>
+      </li>
+    </ul>
+  </ng-container>
+  <ng-template #emptylist>Список пустой</ng-template>
+</section>
+

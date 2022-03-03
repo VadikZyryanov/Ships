@@ -1,0 +1,77 @@
+@import './src/styles';
+
+.list {
+  width: calc(100vw - 393px);
+  height: 100%;
+  padding: 52px 64px 162px;
+  background-color: $light-gray;
+
+  &__title {
+    @include title;
+    margin-bottom: 64px;
+  }
+}
+
+.card {
+  position: relative;
+  cursor: pointer;
+
+  &__link {
+    display: block;
+    width: 100%;
+    height: 100%;
+
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #000;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    &:hover {
+      &:before {
+        opacity: 0.05;
+      }
+    }
+  }
+
+  &__title {
+    display: flex;
+    align-items: center;
+    height: 24px;
+    margin-bottom: 29px;
+
+    &-text {
+      display: inline-block;
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 23px;
+      opacity: 87%;
+      margin-right: 19px;
+    }
+  }
+
+  &__info {
+    display: flex;
+    padding-bottom: 29px;
+    margin-bottom: 40px;
+    border-bottom: 1px solid $gray;
+  }
+
+  &__item {
+    width: 425px;
+
+    &-label {
+      margin-right: 104px;
+    }
+
+    &-value {
+      color: $blue;
+    }
+  }
+}

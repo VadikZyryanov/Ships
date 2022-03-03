@@ -1,9 +1,28 @@
-@import '../../../styles';
+@import '../../../../styles';
 
 .back {
+  position: relative;
   display: flex;
   align-items: center;
+  width: 95px;
   margin-bottom: 22px;
+
+  &:after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    border-bottom: 1px solid $blue;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  &:hover {
+    &:after {
+      opacity: 1;
+    }
+  }
 
   &__text {
     color: $blue;
@@ -14,6 +33,7 @@
 .card {
   padding: 52px 64px 162px;
   background-color: $light-gray;
+  height: 100vh;
 
   &__title {
     @include title;

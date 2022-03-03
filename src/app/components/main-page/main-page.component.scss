@@ -1,0 +1,11 @@
+@import './src/styles';
+
+.main {
+  display: flex;
+  height: 100vh;
+}
+
+.aside {
+  width: 393px;
+  border-left: 1px solid $gray;
+}
