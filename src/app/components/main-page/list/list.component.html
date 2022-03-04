@@ -25,7 +25,7 @@
   </ng-container>
   <ng-template #emptylist>Список пустой</ng-template>
 
-  <div *ngIf="maxStr !== 1" class="pagination">
+  <div *ngIf="maxStr !== 1 && maxStr !== 0" class="pagination">
     <a class="pagination__prev"
         [ngClass]="{'disabled': disabledPrev}"
        (click)="prevStr()"

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from "rxjs";
+import { Observable, Subject } from "rxjs";
 import { Apollo, gql } from "apollo-angular";
 import { map } from "rxjs/operators";
 import { Ship, ShipData, ShipDetails, ShipDetailsData } from "../types/ship.type";
@@ -8,14 +8,23 @@ import { Ship, ShipData, ShipDetails, ShipDetailsData } from "../types/ship.type
   providedIn: 'root',
 })
 export class DataService {
+  private options: Subject<any> = new Subject<any>();
 
   constructor(private apollo: Apollo) { }
 
-  public getShips(): Observable<Ship[]> {
+  public optionsSubscriber(): Observable<any> {
+    return this.options.asObservable();
+  }
+
+  public setOptions(options: any) {
+    this.options.next(options);
+  }
+
+  public getShips(options: any): Observable<Ship[]> {
 
     const query = gql`
-      query getShips {
-        ships {
+      query getShips($findName: String, $findType: String) {
+        ships(find: {name: $findName, type: $findType}) {
           home_port
           type
           name
@@ -27,10 +36,10 @@ export class DataService {
     return this.apollo
       .watchQuery<ShipData>({
         query,
-        // variables: {
-        //   findName: options.filter.text,
-        //   findType: options.filter.radio
-        // }
+        variables: {
+          findName: options.name,
+          findType: options.type,
+        }
       }).valueChanges.pipe(map(value => value.data.ships))
   }
 
@@ -53,10 +62,10 @@ export class DataService {
     return this.apollo.watchQuery<ShipDetailsData>({
       query,
       variables: {
-        findStr: id
+        findStr: id,
       }
     }).valueChanges.pipe(
-      map(item => item.data.ships[0])
+      map(item => item.data.ships[0]),
     );
   }
 }

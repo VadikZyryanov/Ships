@@ -1,13 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {DataService} from "../../../services/data.service";
 import { Ship } from "../../../types/ship.type";
+import { FilterOptions } from "../../../types/filter.type";
+import { takeUntil } from "rxjs/operators";
+import { Subject } from "rxjs";
 
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
-export class ListComponent implements OnInit {
+export class ListComponent implements OnInit, OnDestroy {
 
   public ships: Ship[] = [];
   public shipsAll: Ship[] = [];
@@ -17,11 +20,28 @@ export class ListComponent implements OnInit {
   public step: number = 5;
   public disabledPrev: boolean = true;
   public disabledNext: boolean = false;
+  public options: FilterOptions = {};
+
+  private destroy$: Subject<void> = new Subject<void>();
 
   constructor(private dataService: DataService) { }
 
   public ngOnInit(): void {
-    this.dataService.getShips()
+    this.getShips(this.options);
+    this.dataService.optionsSubscriber()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(options => {
+        this.getShips(options);
+      })
+  }
+
+  public ngOnDestroy() {
+    this.destroy$.next();
+  }
+
+  public getShips(options: any) {
+    this.dataService.getShips(options)
+      .pipe(takeUntil(this.destroy$))
       .subscribe((ships: Ship[]) => {
         this.ships = ships.slice(0, this.step);
         this.shipsAll = ships;

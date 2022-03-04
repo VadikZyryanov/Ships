@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from "@angular/forms";
-import { FilterOptions } from "../../../types/filter.type";
+import { DataService } from "../../../services/data.service";
 
 
 @Component({
@@ -10,22 +10,23 @@ import { FilterOptions } from "../../../types/filter.type";
 })
 export class FilterComponent implements OnInit {
 
-  public filterName: FormControl = new FormControl()
+  public filterName: FormControl = new FormControl();
+  public filterPort: FormControl = new FormControl();
+  public filterType: FormControl = new FormControl();
   public filterForm: FormGroup = new FormGroup({
     name: this.filterName,
+    port: this.filterPort,
+    type: this.filterType,
   });
-  public filterOptions: any;
+  public ports: string[] = ['Port Canaveral', 'Port of Los Angeles', 'Fort Lauderdale'];
+  public types: string[] = ['Barge', 'Cargo', 'High Speed Craft', 'Tug'];
 
-  constructor() { }
+
+  constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
-    this.filterName.valueChanges.subscribe(value => {
-      console.log(value);
+    this.filterForm.valueChanges.subscribe(options => {
+      this.dataService.setOptions(options);
     })
   }
-
-  public changeName($event: any) {
-    console.log($event)
-  }
-
 }
