@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import {DataService} from "../../../services/data.service";
+import { DataService } from "../../../services/data.service";
 import { Ship } from "../../../types/ship.type";
 import { FilterOptions } from "../../../types/filter.type";
 import { takeUntil } from "rxjs/operators";
@@ -39,7 +39,7 @@ export class ListComponent implements OnInit, OnDestroy {
     this.destroy$.next();
   }
 
-  public getShips(options: any) {
+  public getShips(options: FilterOptions) {
     this.dataService.getShips(options)
       .pipe(takeUntil(this.destroy$))
       .subscribe((ships: Ship[]) => {

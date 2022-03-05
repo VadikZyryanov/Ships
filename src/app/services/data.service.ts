@@ -3,6 +3,7 @@ import { Observable, Subject } from "rxjs";
 import { Apollo, gql } from "apollo-angular";
 import { map } from "rxjs/operators";
 import { Ship, ShipData, ShipDetails, ShipDetailsData } from "../types/ship.type";
+import { FilterOptions } from "../types/filter.type";
 
 @Injectable({
   providedIn: 'root',
@@ -12,11 +13,11 @@ export class DataService {
 
   constructor(private apollo: Apollo) { }
 
-  public optionsSubscriber(): Observable<any> {
+  public optionsSubscriber(): Observable<FilterOptions> {
     return this.options.asObservable();
   }
 
-  public setOptions(options: any) {
+  public setOptions(options: FilterOptions) {
     this.options.next(options);
   }
 
