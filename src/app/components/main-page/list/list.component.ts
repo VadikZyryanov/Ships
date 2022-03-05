@@ -46,6 +46,10 @@ export class ListComponent implements OnInit, OnDestroy {
         this.ships = ships.slice(0, this.step);
         this.shipsAll = ships;
         this.maxStr = Math.ceil(ships.length / this.step);
+        this.disabledPrev = true;
+        this.disabledNext = false;
+        this.numberStr = 1;
+        this.countItems = 0;
       })
   }
 

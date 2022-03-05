@@ -1,14 +1,26 @@
 <div class="filter">
   <h2 class="filter__title">Фильтры</h2>
   <form [formGroup]="filterForm">
-    <input class="filter__name" type="text" placeholder="Название" [formControlName]="'name'">
+    <div class="filter__name">
+      <span class="filter__name-label" [class.small] = "smallLabel">Название</span>
+      <input class="filter__name-input" type="text" [formControlName]="'name'">
+    </div>
 
-    <div class="filter__port">
-      <p>Порт</p>
-      <p>Выбраны 0</p>
-      <div *ngFor="let port of ports">
-        <input type="checkbox" name="port" [formControlName]="'port'">
-        <span>{{port}}</span>
+    <div
+      class="filter__port active"
+      [class.active] = "disablePorts"
+      (click)="togglePort($event)"
+    >
+      <p class="filter__port-label">Порт</p>
+      <p class="filter__port-text">Выбраны {{selectedPorts.length}}</p>
+    </div>
+    <div
+      class="filter__port-block"
+      [class.disactive] = "!disablePorts"
+    >
+      <div class="filter__port-item port-item" *ngFor="let port of ports">
+        <input class="port-item__checkbox" type="checkbox" name="port" (click)="clickPort(port)">
+        <span  class="port-item__text">{{port}}</span>
       </div>
     </div>
 

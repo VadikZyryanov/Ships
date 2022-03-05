@@ -10,8 +10,11 @@ import { DataService } from "../../../services/data.service";
 })
 export class FilterComponent implements OnInit {
 
+  public selectedPorts: string[] = [];
+  public disablePorts: boolean = false;
+  public smallLabel: boolean = false;
   public filterName: FormControl = new FormControl();
-  public filterPort: FormControl = new FormControl();
+  public filterPort: FormControl = new FormControl([]);
   public filterType: FormControl = new FormControl();
   public filterForm: FormGroup = new FormGroup({
     name: this.filterName,
@@ -24,9 +27,23 @@ export class FilterComponent implements OnInit {
 
   constructor(private dataService: DataService) { }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.filterForm.valueChanges.subscribe(options => {
+      options.name ? this.smallLabel = true : this.smallLabel = false;
       this.dataService.setOptions(options);
     })
+  }
+
+  public clickPort(port: string): void {
+    if (this.selectedPorts.length === 0 || !this.selectedPorts.some(el => el === port)) {
+      this.selectedPorts.push(port);
+    } else {
+      this.selectedPorts.splice(this.selectedPorts.indexOf(port), 1);
+    }
+    this.filterPort.setValue(this.selectedPorts);
+  }
+
+  public togglePort($event: any): void {
+    this.disablePorts = !this.disablePorts;
   }
 }
