@@ -1,1 +1,70 @@
-/* You can add global styles to this file, and also import other style files */
+$light-gray: #FAFAFA;
+$gray: #A5A5A5;
+$blue: #2962FF;
+
+@mixin title {
+  font-weight: 500;
+  font-size: 28px;
+  line-height: 32px;
+  opacity: 87%;
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  src: local("Roboto"),
+  url(https://fonts.gstatic.com/s/roboto/v29/KFOmCnqEu92Fr1Mu4mxK.woff2) format("woff2");
+}
+
+html {
+  box-sizing: border-box;
+}
+
+*, :before, :after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Roboto', "Arial", sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+h1,
+h2,
+h3 {
+  padding: 0;
+  margin: 0;
+}
+
+p {
+  padding: 0;
+  margin: 0;
+}
+
+button {
+  cursor: pointer;
+}
+
+input,
+button {
+  font: inherit;
+  outline: none;
+}
