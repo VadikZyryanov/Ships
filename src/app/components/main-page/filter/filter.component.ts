@@ -5,7 +5,7 @@ import { select, Store } from "@ngrx/store";
 import { filterSelector } from "../../../reducers/filter/filter.selectors";
 import { Observable } from "rxjs";
 import { FilterOptions } from "../../../types/filter.type";
-import { NameAction, TypeAction } from "../../../reducers/filter/filter.actions";
+import { NameAction, PortsAction, TypeAction } from "../../../reducers/filter/filter.actions";
 
 @Component({
   selector: 'app-filter',
@@ -18,14 +18,17 @@ export class FilterComponent implements OnInit {
   public disablePorts: boolean = false;
   public smallLabel: boolean = false;
   public filterName: FormControl = new FormControl('');
-  public filterPort: FormControl = new FormControl([]);
   public filterType: FormControl = new FormControl('');
   public filterForm: FormGroup = new FormGroup({
     name: this.filterName,
-    ports: this.filterPort,
     type: this.filterType,
   });
-  public ports: string[] = ['Port Canaveral', 'Port of Los Angeles', 'Fort Lauderdale'];
+  public ports: {name: string, checked: boolean}[] =
+    [
+      {name: 'Port Canaveral', checked: false},
+      {name: 'Port of Los Angeles', checked: false},
+      {name: 'Fort Lauderdale', checked: false},
+    ];
   public types: string[] = ['Barge', 'Cargo', 'High Speed Craft', 'Tug'];
 
   private filterSelector$: Observable<FilterOptions> = this.store.pipe(select(filterSelector));
@@ -39,6 +42,7 @@ export class FilterComponent implements OnInit {
     this.filterSelector$.subscribe(options => {
       this.setName(options.name);
       this.setType(options.type);
+      this.setPorts(options.ports);
     })
   }
 
@@ -46,13 +50,29 @@ export class FilterComponent implements OnInit {
     this.disablePorts = !this.disablePorts;
   }
 
-  public clickPort(port: string): void {
-    // if (this.selectedPorts.length === 0 || !this.selectedPorts.some(el => el === port)) {
-    //   this.selectedPorts.push(port);
-    // } else {
-    //   this.selectedPorts.splice(this.selectedPorts.indexOf(port), 1);
-    // }
-    // this.store.dispatch(new PortsAction(this.selectedPorts))
+  public setPorts(optionPorts: string[]): void {
+    if (optionPorts.length) {
+      this.selectedPorts = [];
+      this.disablePorts = true;
+      this.ports.map(port => {
+        if (optionPorts.includes(port.name)) {
+          port.checked = true;
+          this.selectedPorts.push(port.name);
+        } else {
+          port.checked = false;
+        }
+      })
+    }
+  }
+
+  public changePort(port: string): void {
+    if (this.selectedPorts.length === 0 || !this.selectedPorts.some(el => el === port)) {
+      this.selectedPorts.push(port);
+    } else {
+      this.selectedPorts.splice(this.selectedPorts.indexOf(port), 1);
+    }
+    const copyPorts = [...this.selectedPorts]
+    this.store.dispatch(new PortsAction(copyPorts))
   }
 
   public setName(name: string): void {

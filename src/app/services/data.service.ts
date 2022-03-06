@@ -36,8 +36,8 @@ export class DataService {
 
   public getShipDetails(id: string): Observable<ShipDetails> {
     const query = gql`
-      query getShipById($findStr: ID!) {
-        ships(find: {id: $findStr}) {
+      query getShipById($findID: ID!) {
+        ships(find: {id: $findID}) {
           name
           type
           home_port
@@ -53,10 +53,10 @@ export class DataService {
     return this.apollo.watchQuery<ShipDetailsData>({
       query,
       variables: {
-        findStr: id,
+        findID: id,
       }
     }).valueChanges.pipe(
-      map(item => item.data.ships[0]),
+      map(value => value.data.ships[0]),
     );
   }
 }

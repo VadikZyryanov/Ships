@@ -12,15 +12,15 @@
       (click)="togglePort()"
     >
       <p class="filter__port-label">Порт</p>
-      <p class="filter__port-text">Выбраны {{selectedPorts.length}}</p>
+      <p class="filter__port-text">Выбраны: {{selectedPorts.length}}</p>
     </div>
     <div
       class="filter__port-block"
       [class.disactive] = "!disablePorts"
     >
       <div class="filter__port-item port-item" *ngFor="let port of ports">
-        <input class="port-item__checkbox" type="checkbox" name="port" (click)="clickPort(port)">
-        <span  class="port-item__text">{{port}}</span>
+        <input class="port-item__checkbox" type="checkbox" [checked]="port.checked" (click)="changePort(port.name)">
+        <span  class="port-item__text">{{port.name}}</span>
       </div>
     </div>
 

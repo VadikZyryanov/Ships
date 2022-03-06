@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DataService } from "../../../services/data.service";
 import { Ship } from "../../../types/ship.type";
 import { FilterOptions } from "../../../types/filter.type";
-import { takeUntil } from "rxjs/operators";
+import { map, takeUntil } from "rxjs/operators";
 import { BehaviorSubject, Observable, Subject } from "rxjs";
 import { select, Store } from "@ngrx/store";
 import { filterSelector } from "../../../reducers/filter/filter.selectors";
@@ -52,6 +52,7 @@ export class ListComponent implements OnInit, OnDestroy {
           : this.startSlice = page * this.step - this.step;
       })
   }
+
   public ngOnDestroy() {
     this.destroy$.next();
   }
@@ -59,7 +60,15 @@ export class ListComponent implements OnInit, OnDestroy {
   public getShips(options: FilterOptions): void {
     this.loading$.next(true);
     this.dataService.getShips(options)
-      .pipe(takeUntil(this.destroy$))
+      .pipe(takeUntil(this.destroy$),
+        map(ships => {
+          if (options.ports.length) {
+            ships = ships.filter(ship => {
+              return options.ports.includes(ship.home_port);
+            })
+          }
+          return ships
+        }))
       .subscribe((ships: Ship[]) => {
         this.maxPage = Math.ceil(ships.length / this.step);
         if (this.page > this.maxPage || this.page === 1) {

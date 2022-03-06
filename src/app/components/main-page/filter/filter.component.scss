@@ -43,6 +43,7 @@
   }
 
   &__port {
+    cursor: pointer;
     border-bottom: 1px solid $gray;
     padding-bottom: 7px;
 
@@ -91,6 +92,7 @@
   margin-bottom: 12px;
 
   &__button {
+    cursor: pointer;
     width: 18px;
     height: 18px;
   }
