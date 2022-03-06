@@ -3,72 +3,103 @@ import { DataService } from "../../../services/data.service";
 import { Ship } from "../../../types/ship.type";
 import { FilterOptions } from "../../../types/filter.type";
 import { takeUntil } from "rxjs/operators";
-import { Subject } from "rxjs";
+import { BehaviorSubject, Observable, Subject } from "rxjs";
+import { select, Store } from "@ngrx/store";
+import { filterSelector } from "../../../reducers/filter/filter.selectors";
+import { PaginatorPageAction } from "../../../reducers/pagination/pagination.actions";
+import { paginatorSelector } from "../../../reducers/pagination/pagination.selectors";
 
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
+
 export class ListComponent implements OnInit, OnDestroy {
 
-  public ships: Ship[] = [];
+  public shipsList: Ship[] = [];
   public shipsAll: Ship[] = [];
-  public numberStr: number = 1;
-  public maxStr: number = 1;
-  public countItems: number = 0;
+  public page: number = 1;
+  public maxPage: number = 1;
+  public startSlice: number = 0;
   public step: number = 5;
   public disabledPrev: boolean = true;
   public disabledNext: boolean = false;
-  public options: FilterOptions = {};
+  public loading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   private destroy$: Subject<void> = new Subject<void>();
+  private page$: Observable<number> = this.store.pipe(select(paginatorSelector));
+  private filterSelector$: Observable<FilterOptions> = this.store.pipe(select(filterSelector));
 
-  constructor(private dataService: DataService) { }
+  constructor(
+    private dataService: DataService,
+    private store: Store,
+  ) { }
 
   public ngOnInit(): void {
-    this.getShips(this.options);
-    this.dataService.optionsSubscriber()
+    this.filterSelector$
       .pipe(takeUntil(this.destroy$))
-      .subscribe(options => {
-        this.getShips(options);
+      .subscribe(filterOptions => {
+        this.getShips(filterOptions);
+      })
+
+    this.page$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(page => {
+        this.page = page;
+        page === 1
+          ? this.startSlice = 0
+          : this.startSlice = page * this.step - this.step;
       })
   }
-
   public ngOnDestroy() {
     this.destroy$.next();
   }
 
-  public getShips(options: FilterOptions) {
+  public getShips(options: FilterOptions): void {
+    this.loading$.next(true);
     this.dataService.getShips(options)
       .pipe(takeUntil(this.destroy$))
       .subscribe((ships: Ship[]) => {
-        this.ships = ships.slice(0, this.step);
+        this.maxPage = Math.ceil(ships.length / this.step);
+        if (this.page > this.maxPage || this.page === 1) {
+          this.page = 1;
+          this.startSlice = 0;
+          this.disabledPrev = true;
+          this.disabledNext = false;
+        }
+        if (this.page > 1 && this.page < this.maxPage) {
+          this.disabledPrev = false;
+          this.disabledNext = false;
+        }
+        if (this.page === this.maxPage) {
+          this.disabledPrev = false;
+          this.disabledNext = true;
+        }
+        this.shipsList = ships.slice(this.startSlice, this.startSlice + this.step);
         this.shipsAll = ships;
-        this.maxStr = Math.ceil(ships.length / this.step);
-        this.disabledPrev = true;
-        this.disabledNext = false;
-        this.numberStr = 1;
-        this.countItems = 0;
+        this.loading$.next(false);
       })
   }
 
-  public prevStr(): void {
-    if (this.numberStr !== 1) {
-      this.countItems -= this.step;
-      this.numberStr -= 1;
-      this.numberStr === 1 ? this.disabledPrev = true : this.disabledPrev = false;
-      this.ships = this.shipsAll.slice(this.countItems, this.countItems + this.step);
+  public prevPage(): void {
+    if (this.page !== 1) {
+      this.startSlice -= this.step;
+      this.page -= 1;
+      this.page === 1 ? this.disabledPrev = true : this.disabledPrev = false;
+      this.shipsList = this.shipsAll.slice(this.startSlice, this.startSlice + this.step);
+      this.store.dispatch(new PaginatorPageAction(this.page));
     }
     this.disabledNext = false;
   }
 
-  public nextStr(): void {
-    if (this.numberStr !== this.maxStr) {
-      this.countItems += this.step;
-      this.numberStr += 1;
-      this.numberStr === this.maxStr ? this.disabledNext = true : this.disabledNext = false;
-      this.ships = this.shipsAll.slice(this.countItems, this.countItems + this.step)
+  public nextPage(): void {
+    if (this.page !== this.maxPage) {
+      this.startSlice += this.step;
+      this.page += 1;
+      this.page === this.maxPage ? this.disabledNext = true : this.disabledNext = false;
+      this.shipsList = this.shipsAll.slice(this.startSlice, this.startSlice + this.step);
+      this.store.dispatch(new PaginatorPageAction(this.page));
     }
     this.disabledPrev = false;
   }

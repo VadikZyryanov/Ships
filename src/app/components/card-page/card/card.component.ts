@@ -2,12 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DataService } from "../../../services/data.service";
 import { ShipDetails } from "../../../types/ship.type";
-import { mergeMap } from "rxjs/operators";
 
 @Component({
   selector: 'app-card',
   templateUrl: './card.component.html',
-  styleUrls: ['./card.component.scss']
+  styleUrls: ['./card.component.scss'],
 })
 export class CardComponent implements OnInit {
 
@@ -20,7 +19,7 @@ export class CardComponent implements OnInit {
     private dataService: DataService,
   ) { }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.activateRoute.params
       .subscribe(params => {
         this.id = params.id;

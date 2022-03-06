@@ -1,8 +1,11 @@
 <section class="list">
   <h1 class="list__title">SpaceX Ships</h1>
-  <ng-container *ngIf="ships.length ; else emptylist">
+  <ng-container *ngIf="loading$ | async">
+    <app-loader></app-loader>
+  </ng-container>
+  <ng-container *ngIf="shipsList.length ; else emptylist">
     <ul class="list__cards cards">
-      <li class="card" *ngFor="let ship of ships">
+      <li class="card" *ngFor="let ship of shipsList">
         <a class="card__link" [routerLink]="['card', ship.id]" >
           <div class="card__title">
             <h3 class="card__title-text">{{ship.name}}</h3>
@@ -13,7 +16,6 @@
               <span class="card__item-label">Тип</span>
               <span class="card__item-value">{{ship.type}}</span>
             </div>
-
             <div class="card__item">
               <span class="card__item-label">Порт</span>
               <span class="card__item-value">{{ship.home_port}}</span>
@@ -23,22 +25,23 @@
       </li>
     </ul>
   </ng-container>
-  <ng-template #emptylist>Список пустой</ng-template>
+  <ng-template #emptylist>Список пуст!</ng-template>
 
-  <div *ngIf="maxStr !== 1 && maxStr !== 0" class="pagination">
+  <div *ngIf="maxPage !== 1 && maxPage !== 0" class="pagination">
     <a class="pagination__prev"
         [ngClass]="{'disabled': disabledPrev}"
-       (click)="prevStr()"
+       (click)="prevPage()"
     >
       <img src="./assets/icons/arrow-prev.svg" alt="arrow-prev">
     </a>
-    <span class="pagination__number">{{numberStr}}</span>
+    <span class="pagination__number">{{page}}</span>
     <a class="pagination__next"
         [ngClass]="{'disabled': disabledNext}"
-       (click)="nextStr()"
+       (click)="nextPage()"
     >
       <img src="./assets/icons/arrow-next.svg" alt="arrow-next">
     </a>
   </div>
 </section>
+
 

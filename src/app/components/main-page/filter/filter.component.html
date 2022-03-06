@@ -3,13 +3,13 @@
   <form [formGroup]="filterForm">
     <div class="filter__name">
       <span class="filter__name-label" [class.small] = "smallLabel">Название</span>
-      <input class="filter__name-input" type="text" [formControlName]="'name'">
+      <input class="filter__name-input" type="text" [formControlName]="'name'" (input)="changeName()">
     </div>
 
     <div
       class="filter__port active"
       [class.active] = "disablePorts"
-      (click)="togglePort($event)"
+      (click)="togglePort()"
     >
       <p class="filter__port-label">Порт</p>
       <p class="filter__port-text">Выбраны {{selectedPorts.length}}</p>
@@ -28,7 +28,7 @@
       <h3 class="filter__type-title">Тип</h3>
       <ng-container>
         <div *ngFor="let type of types" class="filter__type-item type-item">
-          <input class="type-item__button" type="radio" name="type" [formControlName]="'type'" [value]="type">
+          <input class="type-item__button" type="radio" name="type" [formControlName]="'type'" [value]="type" (change)="changeType(type)">
           <span class="type-item__text" >{{type}}</span>
         </div>
       </ng-container>

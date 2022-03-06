@@ -9,6 +9,13 @@ import { FilterComponent } from './components/main-page/filter/filter.component'
 import { GraphQLModule } from "./gradhgl.module";
 import { HttpClientModule } from "@angular/common/http";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { StoreModule } from '@ngrx/store';
+import { reducers, metaReducers } from './reducers';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
+import { EffectsModule } from '@ngrx/effects';
+import { AppEffects } from './app.effects';
+import {LoaderComponent} from "./shared/loader/loader.component";
 
 
 @NgModule({
@@ -17,7 +24,8 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
     ListComponent,
     CardComponent,
     MainPageComponent,
-    FilterComponent
+    FilterComponent,
+    LoaderComponent,
   ],
   imports: [
     BrowserModule,
@@ -26,6 +34,11 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    StoreModule.forRoot(reducers, {
+      metaReducers,
+    }),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
+    EffectsModule.forRoot([AppEffects]),
   ],
   providers: [],
   bootstrap: [AppComponent]

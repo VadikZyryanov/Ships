@@ -1,5 +1,5 @@
 export interface FilterOptions {
-  name?: string;
-  ports?: string[];
-  type?: string;
+  name: string;
+  ports: string[];
+  type: string;
 }

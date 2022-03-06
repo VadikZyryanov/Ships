@@ -1,25 +1,15 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from "rxjs";
+import { Observable } from "rxjs";
 import { Apollo, gql } from "apollo-angular";
 import { map } from "rxjs/operators";
 import { Ship, ShipData, ShipDetails, ShipDetailsData } from "../types/ship.type";
-import { FilterOptions } from "../types/filter.type";
 
 @Injectable({
   providedIn: 'root',
 })
 export class DataService {
-  private options: Subject<any> = new Subject<any>();
 
   constructor(private apollo: Apollo) { }
-
-  public optionsSubscriber(): Observable<FilterOptions> {
-    return this.options.asObservable();
-  }
-
-  public setOptions(options: FilterOptions) {
-    this.options.next(options);
-  }
 
   public getShips(options: any): Observable<Ship[]> {
 

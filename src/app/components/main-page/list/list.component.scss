@@ -1,6 +1,7 @@
 @import './src/styles';
 
 .list {
+  position: relative;
   width: calc(100vw - 393px);
   height: 100%;
   padding: 52px 64px 162px;
